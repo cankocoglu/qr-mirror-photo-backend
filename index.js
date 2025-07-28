@@ -85,7 +85,8 @@ io.on('connection', (socket) => {
   });
 
   socket.on('trigger-capture', async (sessionId) => {
-    console.log(`📸 Capture requested for session-${sessionId}`);
+    console.log(`📸 Trigger-capture received from ${socket.id} for session ${sessionId}`);
+    console.log('Rooms for this socket:', Array.from(socket.rooms));
     io.to(`session-${sessionId}`).emit('capture-now');
   });
 
