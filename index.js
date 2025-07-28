@@ -9,11 +9,26 @@ const mongoose = require('mongoose');
 
 const app = express();
 const server = http.createServer(app);
-
 const allowedOrigins = [
- 'https://qr-mirror-photo-git-main-idealink.vercel.app/', 
- 'https://qr-mirror-photo.vercel.app/'
+  "https://qr-mirror-photo.vercel.app",
+  "https://qr-mirror-photo-git-main-idealink.vercel.app"
 ];
+
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("CORS not allowed for this origin"));
+    }
+  },
+  methods: ["GET", "POST", "OPTIONS"],
+  credentials: true
+};
+
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions));
+app.use(express.json());
 
 const io = new Server(server, {
   cors: {
@@ -22,14 +37,6 @@ const io = new Server(server, {
     credentials: true
   }
 });
-
-app.use(cors({
-  origin: allowedOrigins,
-  methods: ["GET", "POST"],
-  credentials: true
-}));
-
-app.use(express.json());
 
 const PORT = process.env.PORT || 3000;
 const MONGO_URI = process.env.MONGO_URI || 'mongodb+srv://cankocoglu:gwGiKF9QPZYjn9xN@alterna-mirror.g7s6b0y.mongodb.net/';
