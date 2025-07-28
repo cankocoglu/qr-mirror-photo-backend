@@ -43,6 +43,7 @@ app.post('/api/session', async (req, res) => {
   const sessionId = uuidv4();
   try {
     await Session.create({ sessionId });
+    io.emit('new-session', { sessionId, mirrorId: 'MIRROR_001' })
     res.json({ sessionId, url: `https://qr-mirror-photo-git-main-idealink.vercel.app/capture/${sessionId}` });
   } catch (err) {
     console.error(err);
