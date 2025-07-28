@@ -11,7 +11,7 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: '*', // replace with your frontend origin in production
+    origin: 'https://qr-mirror-photo-git-main-idealink.vercel.app/',
     methods: ['GET', 'POST']
   }
 });
