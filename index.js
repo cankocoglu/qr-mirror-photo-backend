@@ -43,7 +43,7 @@ app.post('/api/session', async (req, res) => {
   const sessionId = uuidv4();
   try {
     await Session.create({ sessionId });
-    res.json({ sessionId, url: `https://qr-mirror-photo-git-main-idealink.vercel.app//capture/${sessionId}` });
+    res.json({ sessionId, url: `https://qr-mirror-photo-git-main-idealink.vercel.app/capture/${sessionId}` });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Failed to create session' });
